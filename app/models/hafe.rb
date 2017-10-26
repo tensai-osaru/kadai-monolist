@@ -1,4 +1,4 @@
-class Hafe < ApplicationRecord
+class Have < ApplicationRecord
   belongs_to :user
   belongs_to :item
 end
