@@ -10,7 +10,18 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171022152016) do
+ActiveRecord::Schema.define(version: 20171023132402) do
+
+  create_table "haves", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.string   "type"
+    t.integer  "user_id"
+    t.integer  "item_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["item_id"], name: "index_haves_on_item_id", using: :btree
+    t.index ["user_id", "item_id", "type"], name: "index_haves_on_user_id_and_item_id_and_type", unique: true, using: :btree
+    t.index ["user_id"], name: "index_haves_on_user_id", using: :btree
+  end
 
   create_table "items", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string   "code"
@@ -40,6 +51,8 @@ ActiveRecord::Schema.define(version: 20171022152016) do
     t.datetime "updated_at",      null: false
   end
 
+  add_foreign_key "haves", "items"
+  add_foreign_key "haves", "users"
   add_foreign_key "ownerships", "items"
   add_foreign_key "ownerships", "users"
 end
